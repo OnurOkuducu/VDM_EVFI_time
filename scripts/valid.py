@@ -1141,8 +1141,7 @@ def main():
                 
 
             
-                torch.cuda.synchronize() 
-                start = time.perf_counter()
+
 
                 video_frames, org_frames = pipeline(
                     valid_image,
@@ -1165,10 +1164,7 @@ def main():
                     s_churn= args.s_churn,
                     org_frames= org_frames
                 )
-                torch.cuda.synchronize()
-                end = time.perf_counter()
 
-                print(f"Pipeline execution took {end - start:.2f} seconds")
 
 
                 video_frames= video_frames.frames[0]
