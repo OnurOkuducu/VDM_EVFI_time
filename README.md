@@ -90,8 +90,10 @@ bash VDM_EVFI/scripts/valid.sh
 
 The script is already configured to measure and print the total inference time.
 
-*   As the model runs, you will see progress updates in the console, including the step index (e.g., `-step index 25-`).
-*   The code responsible for printing the final inference time is located in the `VDM_EVFI/scripts/valid.py` file on **lines 1045 and 1069**. Once the process is complete, the total time will be printed to your terminal.
+*   As the model runs, you will see progress updates in the console, including the step index (e.g., `-setp index 25-`).
+*   I already made the necessary changes to get the runtime on `VDM_EVFI/scripts/valid.py` file on **lines 1045 and 1069**. Once the process is complete, the total time will be printed to your terminal.
+
+*   The explanation below is from the original repo, if any part is not explained good it might be helpful.
 
 ## Installation
 
