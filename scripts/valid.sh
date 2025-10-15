@@ -11,7 +11,7 @@ accelerate launch valid.py \
     --num_frames=5 \
     --width=970 \
     --height=625 \
-    --rescale_factor=2 \
+    --rescale_factor=1 \
     --per_gpu_batch_size=1 --gradient_accumulation_steps=4 \
     --num_train_epochs=50 \
     --checkpointing_steps=20 \
