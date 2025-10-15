@@ -48,8 +48,7 @@ from diffusers.training_utils import cast_training_params
 
 from src.utils.data_utils import load_event_sequence_npz, get_event_idx_5frame, check_event_sequence_npz
 from src.utils.mStack_utils import events_to_voxel_grid, visualize_voxel_grid, voxel_norm, get_event_stacks
-
-
+import time
 
 
 
@@ -1142,6 +1141,8 @@ def main():
                 
 
             
+                torch.cuda.synchronize() 
+                start = time.perf_counter()
 
                 video_frames, org_frames = pipeline(
                     valid_image,
@@ -1164,6 +1165,11 @@ def main():
                     s_churn= args.s_churn,
                     org_frames= org_frames
                 )
+                torch.cuda.synchronize()
+                end = time.perf_counter()
+
+                print(f"Pipeline execution took {end - start:.2f} seconds")
+
 
                 video_frames= video_frames.frames[0]
 
