@@ -1,28 +1,97 @@
-Step by step explanation to get the runtime information:
-1- Clone this repo.
-2- conda create --name VDM_EVFI python=3.9
-3- conda activate VDM_EVFI
-4- cd VDM_EVFI
-5- pip install torch torchvision torchaudio
-6- cd diffusers/
-7- pip install accelerate
-8- pip install -e ".[torch]"
-9- cd ..
-10- pip install -r requirements.txt
+# VDM_EVFI: Guide to Setup and Runtime Analysis
 
-11- Go to this link: https://huggingface.co/jxAIbot/VDM_EVFI
-12- Download all the files in the files and version section (make sure the directory structure is same)
-13- There are several changes that needs to be done in the VDM_EVFI/scripts/valid.sh file:
-
---test_data_path= this is the path for bs_ergb/1_Test folder 
---controlnet_model_name_or_path=path for the controlnet folder downloaded from huggingface 
---num_frames=5 -> This number -2 frames will be interpolated,
---width=970 
---height=625 Make sure to keep the original width and height as the model is trained on these values.
---rescale_factor: This is the parameter deciding the number of tiles that the video is going to be divided into. default is 2, lower mean less number of tiles.
+## 1. Environment Setup
 
 
-After making sure the changes are in effect run VDM_EVFI/scripts/valid.sh . I already included the code that will print the time it takes for the full inference in the VDM_EVFI/scripts/valid.py file, (in line 1045 and 1069). Once inference begins it also outputs the number of inferences in -setp index 25- format.
+1.  **Clone the Repository**
+
+2.  **Create a Conda Environment**
+    ```bash
+    conda create --name VDM_EVFI python=3.9
+    ```
+
+3.  **Activate the Environment**
+    ```bash
+    conda activate VDM_EVFI
+    ```
+
+4.  **Navigate into the Project Directory**
+    ```bash
+    cd VDM_EVFI
+    ```
+
+5.  **Install PyTorch**
+    ```bash
+    pip install torch torchvision torchaudio
+    ```
+
+6.  **Navigate into the `diffusers` Directory**
+    ```bash
+    cd diffusers/
+    ```
+
+7.  **Install Accelerate**
+    ```bash
+    pip install accelerate
+    ```
+
+8.  **Install `diffusers` in Editable Mode**
+    ```bash
+    pip install -e ".[torch]"
+    ```
+
+9.  **Return to the Project Root**
+    ```bash
+    cd ..
+    ```
+
+10. **Install Remaining Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## 2. Download Model Weights
+
+1.  Go to the model's Hugging Face repository:
+    **[https://huggingface.co/jxAIbot/VDM_EVFI](https://huggingface.co/jxAIbot/VDM_EVFI)**
+
+2.  Download all files from the **"Files and versions"** tab.
+
+    > ⚠️ **Important:** Make sure you preserve the exact directory structure from Hugging Face when you save the files locally.
+
+## 🔧 3. Configuration
+
+You must edit the `VDM_EVFI/scripts/valid.sh` script to set the correct paths and parameters for your run.
+
+Open `VDM_EVFI/scripts/valid.sh` and modify the following parameters:
+
+*   `--test_data_path`: Set this to the path of your `bs_ergb/1_Test` folder.
+*   `--controlnet_model_name_or_path`: Set this to the path of the `controlnet` folder you downloaded from Hugging Face.
+*   `--num_frames`: The total number of frames to generate. The number of *interpolated* frames will be this value minus 2.
+    *   *Example:* `--num_frames=5`
+*   `--width`: The width of the video frames.
+    *   *Example:* `--width=970`
+*   `--height`: The height of the video frames.
+    *   *Example:* `--height=625`
+
+    > ⚠️ **Critical:** The model was trained on `970x625` resolution. Keep the original `width` and `height` values for best results.
+*   `--rescale_factor`: This parameter controls the number of tiles the video is divided into for processing. A lower value means fewer tiles.
+    *   *Default:* `2`
+
+## ▶️ 4. Run Inference
+
+After making sure all the changes in `valid.sh` are saved, run the script from the project's root directory:
+
+```bash
+bash VDM_EVFI/scripts/valid.sh
+```
+
+## ⏱️ 5. Get Runtime Information
+
+The script is already configured to measure and print the total inference time.
+
+*   As the model runs, you will see progress updates in the console, including the step index (e.g., `-step index 25-`).
+*   The code responsible for printing the final inference time is located in the `VDM_EVFI/scripts/valid.py` file on **lines 1045 and 1069**. Once the process is complete, the total time will be printed to your terminal.
 
 ## Installation
 
