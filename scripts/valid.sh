@@ -1,4 +1,4 @@
-# CUDA_VISIBLE_DEVICES=0
+CUDA_VISIBLE_DEVICES=0
 
 accelerate launch valid.py \
     --pretrained_model_name_or_path="stabilityai/stable-video-diffusion-img2vid" \
