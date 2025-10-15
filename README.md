@@ -1,13 +1,28 @@
-# Repurposing Pre-trained Video Diffusion Models for Event-based Video Interpolation (CVPR 2025)
-**Official repository for the CVPR 2025 paper, "Repurposing Pre-trained Video Diffusion Models for Event-based Video Interpolation"**
+Step by step explanation to get the runtime information:
+1- Clone this repo.
+2- conda create --name VDM_EVFI python=3.9
+3- conda activate VDM_EVFI
+4- cd VDM_EVFI
+5- pip install torch torchvision torchaudio
+6- cd diffusers/
+7- pip install accelerate
+8- pip install -e ".[torch]"
+9- cd ..
+10- pip install -r requirements.txt
 
-\[[Website](https://vdm-evfi.github.io/)\] 
-\[[Paper](https://arxiv.org/abs/2412.07761)\] 
+11- Go to this link: https://huggingface.co/jxAIbot/VDM_EVFI
+12- Download all the files in the files and version section (make sure the directory structure is same)
+13- There are several changes that needs to be done in the VDM_EVFI/scripts/valid.sh file:
+
+--test_data_path= this is the path for bs_ergb/1_Test folder 
+--controlnet_model_name_or_path=path for the controlnet folder downloaded from huggingface 
+--num_frames=5 -> This number -2 frames will be interpolated,
+--width=970 
+--height=625 Make sure to keep the original width and height as the model is trained on these values.
+--rescale_factor: This is the parameter deciding the number of tiles that the video is going to be divided into. default is 2, lower mean less number of tiles.
 
 
-
-![teaser.gif](./assets/HTML_Teaser.gif)
-
+After making sure the changes are in effect run VDM_EVFI/scripts/valid.sh . I already included the code that will print the time it takes for the full inference in the VDM_EVFI/scripts/valid.py file, (in line 1045 and 1069). Once inference begins it also outputs the number of inferences in -setp index 25- format.
 
 ## Installation
 
