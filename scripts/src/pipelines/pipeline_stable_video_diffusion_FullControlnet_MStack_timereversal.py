@@ -43,7 +43,7 @@ from einops import rearrange
 import torch.nn.functional as F
 
 from PIL import Image, ImageOps
-
+import time
 
 
 BLEND_OPTION= 2
@@ -574,6 +574,9 @@ class StableVideoDiffusionPipelineControlNet(DiffusionPipeline):
                 returned, otherwise a `tuple` of (`List[List[PIL.Image.Image]]` or `np.ndarray` or `torch.Tensor`) is
                 returned.
         """
+        start = 0
+        end = 0
+        
         # 0. Default height and width to unet
         height = height or self.unet.config.sample_size * self.vae_scale_factor
         width = width or self.unet.config.sample_size * self.vae_scale_factor
@@ -882,6 +885,10 @@ class StableVideoDiffusionPipelineControlNet(DiffusionPipeline):
         # 9. Denoising loop
         num_warmup_steps = len(timesteps) - num_inference_steps * self.scheduler.order
         self._num_timesteps = len(timesteps)
+        
+        torch.cuda.synchronize() 
+        start = time.perf_counter()
+        
         with self.progress_bar(total=num_inference_steps) as progress_bar:
             for i, t in enumerate(timesteps):
                 '''
@@ -1420,7 +1427,11 @@ class StableVideoDiffusionPipelineControlNet(DiffusionPipeline):
 
         if not return_dict:
             return frames
-
+            
+        torch.cuda.synchronize()
+        end = time.perf_counter()
+        print(f"Pipeline execution took {end - start:.2f} seconds")
+        
         return StableVideoDiffusionPipelineOutput(frames=frames), org_frames
 
 
