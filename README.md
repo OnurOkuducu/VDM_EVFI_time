@@ -1,4 +1,4 @@
-# VDM_EVFI: Guide to Setup and Runtime Analysis
+# VDM_EVFI: Setup and Runtime Analysis
 
 ## 1. Environment Setup
 
