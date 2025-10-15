@@ -66,6 +66,7 @@ You must edit the `VDM_EVFI/scripts/valid.sh` script to set the correct paths an
 Open `VDM_EVFI/scripts/valid.sh` and modify the following parameters:
 
 *   `--test_data_path`: Set this to the path of your `bs_ergb/1_Test` folder.
+*   `--event_scale`: 32 for BS_ERGB, 1 for others.
 *   `--controlnet_model_name_or_path`: Set this to the path of the `controlnet` folder you downloaded from Hugging Face.
 *   `--num_frames`: The total number of frames to generate. The number of *interpolated* frames will be this value minus 2.
     *   *Example:* `--num_frames=5`
